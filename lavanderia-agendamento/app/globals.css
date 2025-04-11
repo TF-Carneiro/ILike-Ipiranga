@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 160 100% 33%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 160 100% 33%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 160 100% 40%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 75%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 160 100% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Estilos personalizados para o calendário */
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #00a67e;
+  --rdp-background-color: #e5f6f1;
+  margin: 0;
+}
+
+.rdp-months {
+  justify-content: center;
+}
+
+.rdp-month {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.rdp-caption {
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.rdp-head_cell {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  text-align: center;
+  height: 40px;
+  color: #666;
+}
+
+.rdp-cell {
+  text-align: center;
+  height: var(--rdp-cell-size);
+  width: var(--rdp-cell-size);
+  padding: 0;
+}
+
+.rdp-day {
+  height: var(--rdp-cell-size);
+  width: var(--rdp-cell-size);
+  margin: 0;
+  border-radius: 0;
+}
+
+.rdp-day:hover:not([disabled]) {
+  background-color: var(--rdp-background-color);
+}
+
+.rdp-day_selected {
+  background-color: var(--rdp-accent-color) !important;
+  color: white !important;
+}
+
+.rdp-day_today {
+  background-color: var(--rdp-background-color);
+  font-weight: bold;
+}
+
+.rdp-day_disabled {
+  opacity: 0.25;
+}
+
+.rdp-nav_button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.rdp-head_row,
+.rdp-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+}
+
+.rdp-table {
+  width: 100%;
+}
