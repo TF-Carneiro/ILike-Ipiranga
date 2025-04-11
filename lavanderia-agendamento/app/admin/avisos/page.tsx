@@ -228,100 +228,132 @@ export default function AvisosPage() {
   return (
     <>
       <AdminHeader />
-      <div className="container mx-auto py-6 pt-24 sm:pt-28">
+      <div className="container mx-auto py-6 pt-24 sm:pt-28 px-2 sm:px-4 max-w-full">
         <div className="flex justify-between items-center mb-4">
           <Link href="/admin">
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center gap-1 text-xs sm:text-sm"
+              className="flex items-center gap-1 text-[10px] sm:text-xs"
             >
               <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span>Voltar para o Painel</span>
+              <span>Voltar</span>
             </Button>
           </Link>
         </div>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <div>
-              <CardTitle className="text-2xl font-bold">Avisos</CardTitle>
-              <CardDescription>
-                Gerencie os avisos exibidos no mural da página inicial
+              <CardTitle className="text-lg sm:text-2xl font-bold">
+                Avisos
+              </CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Gerencie os avisos exibidos no mural
               </CardDescription>
             </div>
-            <Button onClick={abrirDialogoNovoAviso}>
-              <Plus className="mr-2 h-4 w-4" />
-              Novo Aviso
+            <Button
+              onClick={abrirDialogoNovoAviso}
+              size="sm"
+              className="text-xs h-8 sm:h-10"
+            >
+              <Plus className="mr-1 h-3 w-3 sm:h-4 sm:w-4" />
+              Novo
             </Button>
           </CardHeader>
           <CardContent>
             {erro && (
-              <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-md flex items-center">
-                <AlertTriangle className="h-5 w-5 mr-2" />
+              <div className="mb-4 p-3 bg-red-100 text-red-800 rounded-md flex items-center text-xs sm:text-sm">
+                <AlertTriangle className="h-4 w-4 mr-2" />
                 {erro}
               </div>
             )}
 
             {carregando ? (
-              <div className="text-center py-4">Carregando avisos...</div>
+              <div className="text-center py-4 text-xs sm:text-sm">
+                Carregando avisos...
+              </div>
             ) : avisos.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                Nenhum aviso encontrado. Clique em "Novo Aviso" para criar.
+              <div className="text-center py-8 text-muted-foreground text-xs sm:text-sm">
+                Nenhum aviso encontrado. Clique em "Novo" para criar.
               </div>
             ) : (
-              <div className="rounded-md border">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[100px]">ID</TableHead>
-                      <TableHead>Título</TableHead>
-                      <TableHead>Tipo</TableHead>
-                      <TableHead>Criado em</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Ações</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {avisos.map((aviso) => (
-                      <TableRow key={aviso.id}>
-                        <TableCell className="font-medium">
-                          {aviso.id}
-                        </TableCell>
-                        <TableCell>{aviso.titulo}</TableCell>
-                        <TableCell>{renderBadgeTipo(aviso.tipo)}</TableCell>
-                        <TableCell>{formatarData(aviso.dataCriacao)}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={aviso.ativo ? "outline" : "secondary"}
-                            className={
-                              aviso.ativo
-                                ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 dark:border-green-600"
-                                : "dark:bg-gray-700 dark:text-gray-200"
-                            }
-                          >
-                            {aviso.ativo ? "Ativo" : "Inativo"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => abrirDialogoEditarAviso(aviso)}
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => confirmarExclusao(aviso)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </TableCell>
+              <div className="rounded-md border overflow-x-auto">
+                <div className="min-w-full">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[40px] text-[10px] sm:text-xs">
+                          ID
+                        </TableHead>
+                        <TableHead className="text-[10px] sm:text-xs">
+                          Título
+                        </TableHead>
+                        <TableHead className="text-[10px] sm:text-xs">
+                          Tipo
+                        </TableHead>
+                        <TableHead className="text-[10px] sm:text-xs whitespace-nowrap">
+                          Criado em
+                        </TableHead>
+                        <TableHead className="text-[10px] sm:text-xs">
+                          Status
+                        </TableHead>
+                        <TableHead className="text-right text-[10px] sm:text-xs w-[80px]">
+                          Ações
+                        </TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {avisos.map((aviso) => (
+                        <TableRow key={aviso.id}>
+                          <TableCell className="font-medium text-[10px] sm:text-xs">
+                            {aviso.id}
+                          </TableCell>
+                          <TableCell className="text-[10px] sm:text-xs max-w-[100px] truncate">
+                            {aviso.titulo}
+                          </TableCell>
+                          <TableCell className="text-[10px] sm:text-xs">
+                            {renderBadgeTipo(aviso.tipo)}
+                          </TableCell>
+                          <TableCell className="text-[10px] sm:text-xs whitespace-nowrap">
+                            {formatarData(aviso.dataCriacao)}
+                          </TableCell>
+                          <TableCell className="text-[10px] sm:text-xs">
+                            <Badge
+                              variant={aviso.ativo ? "outline" : "secondary"}
+                              className={
+                                aviso.ativo
+                                  ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 dark:border-green-600 text-[10px] sm:text-xs"
+                                  : "dark:bg-gray-700 dark:text-gray-200 text-[10px] sm:text-xs"
+                              }
+                            >
+                              {aviso.ativo ? "Ativo" : "Inativo"}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex justify-end gap-1">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => abrirDialogoEditarAviso(aviso)}
+                              >
+                                <Pencil className="h-3 w-3" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => confirmarExclusao(aviso)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               </div>
             )}
           </CardContent>
@@ -329,21 +361,23 @@ export default function AvisosPage() {
 
         {/* Diálogo para criar/editar aviso */}
         <Dialog open={dialogoAberto} onOpenChange={setDialogoAberto}>
-          <DialogContent className="sm:max-w-[525px]">
+          <DialogContent className="max-w-[90vw] sm:max-w-[525px]">
             <DialogHeader>
-              <DialogTitle>
+              <DialogTitle className="text-sm sm:text-base">
                 {modoEdicao ? "Editar Aviso" : "Novo Aviso"}
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-xs sm:text-sm">
                 {modoEdicao
                   ? "Altere os dados do aviso conforme necessário."
                   : "Preencha os dados para criar um novo aviso."}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>
-              <div className="grid gap-4 py-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="titulo">Título</Label>
+              <div className="grid gap-4 py-2 sm:py-4">
+                <div className="grid gap-1 sm:gap-2">
+                  <Label htmlFor="titulo" className="text-xs sm:text-sm">
+                    Título
+                  </Label>
                   <Input
                     id="titulo"
                     value={formDados.titulo}
@@ -351,35 +385,53 @@ export default function AvisosPage() {
                       setFormDados({ ...formDados, titulo: e.target.value })
                     }
                     required
+                    className="text-xs sm:text-sm h-8 sm:h-10"
                   />
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="mensagem">Mensagem</Label>
+                <div className="grid gap-1 sm:gap-2">
+                  <Label htmlFor="mensagem" className="text-xs sm:text-sm">
+                    Mensagem
+                  </Label>
                   <Textarea
                     id="mensagem"
-                    rows={4}
+                    rows={3}
                     value={formDados.mensagem}
                     onChange={(e) =>
                       setFormDados({ ...formDados, mensagem: e.target.value })
                     }
                     required
+                    className="text-xs sm:text-sm min-h-[60px] sm:min-h-[80px]"
                   />
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="tipo">Tipo</Label>
+                <div className="grid gap-1 sm:gap-2">
+                  <Label htmlFor="tipo" className="text-xs sm:text-sm">
+                    Tipo
+                  </Label>
                   <Select
                     value={formDados.tipo}
                     onValueChange={(valor) =>
                       setFormDados({ ...formDados, tipo: valor as any })
                     }
                   >
-                    <SelectTrigger id="tipo">
+                    <SelectTrigger
+                      id="tipo"
+                      className="text-xs sm:text-sm h-8 sm:h-10"
+                    >
                       <SelectValue placeholder="Selecione o tipo" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="info">Informativo</SelectItem>
-                      <SelectItem value="aviso">Aviso</SelectItem>
-                      <SelectItem value="urgente">Urgente</SelectItem>
+                      <SelectItem value="info" className="text-xs sm:text-sm">
+                        Informativo
+                      </SelectItem>
+                      <SelectItem value="aviso" className="text-xs sm:text-sm">
+                        Aviso
+                      </SelectItem>
+                      <SelectItem
+                        value="urgente"
+                        className="text-xs sm:text-sm"
+                      >
+                        Urgente
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -391,12 +443,17 @@ export default function AvisosPage() {
                       setFormDados({ ...formDados, ativo: checked })
                     }
                   />
-                  <Label htmlFor="ativo">Aviso ativo</Label>
+                  <Label htmlFor="ativo" className="text-xs sm:text-sm">
+                    Aviso ativo
+                  </Label>
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">
-                  {modoEdicao ? "Salvar Alterações" : "Criar Aviso"}
+                <Button
+                  type="submit"
+                  className="text-xs sm:text-sm h-8 sm:h-10"
+                >
+                  {modoEdicao ? "Salvar" : "Criar"}
                 </Button>
               </DialogFooter>
             </form>
@@ -408,10 +465,12 @@ export default function AvisosPage() {
           open={confirmarExclusaoAberto}
           onOpenChange={setConfirmarExclusaoAberto}
         >
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="max-w-[90vw] sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Confirmar Exclusão</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-sm sm:text-base">
+                Confirmar Exclusão
+              </DialogTitle>
+              <DialogDescription className="text-xs sm:text-sm">
                 Tem certeza que deseja excluir o aviso &quot;
                 {avisoSelecionado?.titulo}&quot;? Esta ação não pode ser
                 desfeita.
@@ -421,10 +480,15 @@ export default function AvisosPage() {
               <Button
                 variant="outline"
                 onClick={() => setConfirmarExclusaoAberto(false)}
+                className="text-xs sm:text-sm h-8 sm:h-10"
               >
                 Cancelar
               </Button>
-              <Button variant="destructive" onClick={handleExcluir}>
+              <Button
+                variant="destructive"
+                onClick={handleExcluir}
+                className="text-xs sm:text-sm h-8 sm:h-10"
+              >
                 Excluir
               </Button>
             </DialogFooter>

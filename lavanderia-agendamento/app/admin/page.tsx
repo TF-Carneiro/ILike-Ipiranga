@@ -299,49 +299,53 @@ export default function AdminPage() {
 
   // Renderização para dispositivos móveis
   const renderMobileView = () => (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 px-2">
       <div className="flex flex-col gap-3">
-        <h1 className="text-xl font-bold text-foreground">
+        <h1 className="text-lg font-bold text-foreground">
           Visualizar Agendamentos
         </h1>
 
         <div className="flex flex-col gap-2">
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-2.5 top-2.5 h-3 w-3 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Buscar agendamentos..."
-              className="pl-9 w-full h-9 text-sm"
+              placeholder="Buscar..."
+              className="pl-8 w-full h-8 text-xs"
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-1 justify-between">
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-1 text-xs h-8"
+              className="flex items-center gap-1 text-[10px] h-7 px-1.5"
               onClick={handleExportToExcel}
               disabled={agendamentos.length === 0}
             >
               <Calendar className="h-3 w-3" />
-              <span>Exportar CSV</span>
+              <span>CSV</span>
             </Button>
 
             <Button
               variant="destructive"
               size="sm"
-              className="flex items-center gap-1 text-xs h-8"
+              className="flex items-center gap-1 text-[10px] h-7 px-1.5"
               onClick={confirmDeleteMultiple}
               disabled={selectedAgendamentos.length === 0}
             >
               <Trash2 className="h-3 w-3" />
-              <span>Excluir Selecionados ({selectedAgendamentos.length})</span>
+              <span>Excluir ({selectedAgendamentos.length})</span>
             </Button>
 
-            <Link href="/" className="ml-auto">
-              <Button variant="outline" size="sm" className="text-xs h-8">
+            <Link href="/">
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-[10px] h-7 px-1.5"
+              >
                 Ver Calendário
               </Button>
             </Link>
@@ -351,17 +355,21 @@ export default function AdminPage() {
 
       {filteredAgendamentos.length === 0 ? (
         <div className="text-center py-6 text-muted-foreground bg-muted/50 rounded-lg border border-border">
-          <p className="text-sm">Nenhum agendamento encontrado</p>
+          <p className="text-xs">Nenhum agendamento encontrado</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2 mb-1">
             <Checkbox
               id="select-all-mobile"
               checked={selectAll}
               onCheckedChange={handleSelectAll}
+              className="h-3 w-3"
             />
-            <label htmlFor="select-all-mobile" className="text-xs font-medium">
+            <label
+              htmlFor="select-all-mobile"
+              className="text-[10px] font-medium"
+            >
               Selecionar todos
             </label>
           </div>
@@ -369,21 +377,22 @@ export default function AdminPage() {
           {filteredAgendamentos.map((agendamento) => (
             <div
               key={agendamento.id}
-              className="bg-card rounded-lg border border-border p-3 text-sm"
+              className="bg-card rounded-lg border border-border p-2 text-xs"
             >
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center gap-2">
+              <div className="flex justify-between items-start mb-1">
+                <div className="flex items-center gap-1">
                   <Checkbox
                     id={`select-${agendamento.id}-mobile`}
                     checked={selectedAgendamentos.includes(agendamento.id)}
                     onCheckedChange={() =>
                       handleSelectAgendamento(agendamento.id)
                     }
+                    className="h-3 w-3"
                   />
                   <div>
-                    <h3 className="font-medium">{agendamento.nome}</h3>
-                    <p className="text-xs text-muted-foreground">
-                      Unidade {agendamento.apartamento}
+                    <h3 className="font-medium text-xs">{agendamento.nome}</h3>
+                    <p className="text-[10px] text-muted-foreground">
+                      Unid. {agendamento.apartamento}
                     </p>
                   </div>
                 </div>
@@ -391,37 +400,37 @@ export default function AdminPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7"
+                    className="h-6 w-6"
                     asChild
                   >
                     <Link href={`/admin/editar/${agendamento.id}`}>
-                      <Pencil className="h-3.5 w-3.5" />
+                      <Pencil className="h-3 w-3" />
                       <span className="sr-only">Editar</span>
                     </Link>
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 text-destructive"
+                    className="h-6 w-6 text-destructive"
                     onClick={() => confirmDeleteAgendamento(agendamento.id)}
                   >
-                    <Trash2 className="h-3.5 w-3.5" />
+                    <Trash2 className="h-3 w-3" />
                     <span className="sr-only">Excluir</span>
                   </Button>
                 </div>
               </div>
-              <div className="flex gap-4 text-xs">
+              <div className="flex gap-2 text-[10px]">
                 <div className="flex items-center">
-                  <Calendar className="h-3 w-3 mr-1 text-muted-foreground" />
+                  <Calendar className="h-2.5 w-2.5 mr-0.5 text-muted-foreground" />
                   {format(new Date(agendamento.dataHora), "dd/MM/yyyy", {
                     locale: ptBR,
                   })}
                 </div>
                 <div className="flex items-center">
-                  <Clock className="h-3 w-3 mr-1 text-muted-foreground" />
+                  <Clock className="h-2.5 w-2.5 mr-0.5 text-muted-foreground" />
                   {format(new Date(agendamento.dataHora), "HH:mm")}
                 </div>
-                <div className="ml-auto">Máquina {agendamento.maquinaId}</div>
+                <div className="ml-auto">Máq. {agendamento.maquinaId}</div>
               </div>
             </div>
           ))}
