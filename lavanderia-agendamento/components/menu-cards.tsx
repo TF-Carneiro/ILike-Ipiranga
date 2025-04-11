@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,7 @@ import { Menu } from "lucide-react";
 
 export function MenuCards() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   // Array com os serviços disponíveis
   const servicos = [
@@ -25,6 +26,11 @@ export function MenuCards() {
     { titulo: "Churrasqueira", href: "#", ativo: false },
     { titulo: "Quadra", href: "#", ativo: false },
   ];
+
+  const handleSelectService = (href: string) => {
+    setOpen(false);
+    router.push(href);
+  };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -42,25 +48,22 @@ export function MenuCards() {
 
         {servicos.map((servico) =>
           servico.ativo ? (
-            <Link
-              href={servico.href}
+            <DropdownMenuItem
               key={servico.titulo}
-              onClick={() => setOpen(false)}
+              className="cursor-pointer text-primary font-medium"
+              onClick={() => handleSelectService(servico.href)}
             >
-              <DropdownMenuItem className="cursor-pointer text-primary font-medium">
-                {servico.titulo}
-              </DropdownMenuItem>
-            </Link>
+              <span className="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+              {servico.titulo}
+            </DropdownMenuItem>
           ) : (
             <DropdownMenuItem
               key={servico.titulo}
               className="opacity-70 cursor-not-allowed"
               disabled
             >
+              <span className="h-2 w-2 bg-red-500 rounded-full mr-2"></span>
               {servico.titulo}
-              <span className="text-[10px] ml-2 text-muted-foreground">
-                (em breve)
-              </span>
             </DropdownMenuItem>
           )
         )}

@@ -16,7 +16,7 @@ export function NovoAgendamentoButton() {
         size="sm"
       >
         <Plus className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4" />
-        <span className="hidden xs:inline">Novo Agendamento</span>
+        <span className="hidden xs:inline">Agendar</span>
         <span className="xs:hidden">Agendar</span>
       </Button>
       <NovoAgendamentoDialog

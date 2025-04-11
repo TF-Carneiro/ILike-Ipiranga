@@ -151,7 +151,7 @@ export function CalendarioAgendamento() {
           <WashingMachine className="h-12 w-12 mx-auto mb-3 text-primary/50" />
           <p>Nenhum agendamento encontrado para esta data.</p>
           <p className="text-sm mt-1">
-            Clique em "Novo Agendamento" para reservar um horário.
+            Clique em "Agendar" para reservar um horário.
           </p>
         </div>
       ) : null}

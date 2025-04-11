@@ -199,9 +199,7 @@ export function NovoAgendamentoDialog({
     <Dialog open={aberto} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] max-w-[95vw] p-2 sm:p-6">
         <DialogHeader className="pb-1 sm:pb-2">
-          <DialogTitle className="text-lg sm:text-xl">
-            Novo Agendamento
-          </DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl">Agendar</DialogTitle>
           <DialogDescription className="text-[10px] sm:text-sm">
             Preencha os campos para agendar um horário.
           </DialogDescription>
@@ -278,7 +276,10 @@ export function NovoAgendamentoDialog({
                             )}
                             onClick={(e) => {
                               e.preventDefault();
+                              e.stopPropagation();
+                              setCalendarOpen(true);
                             }}
+                            type="button"
                           >
                             {field.value ? (
                               format(field.value, "dd/MM/yyyy", {
@@ -291,16 +292,14 @@ export function NovoAgendamentoDialog({
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
+                      <PopoverContent className="w-auto p-0 z-[9999]">
                         <CalendarioPersonalizado
-                          mode="single"
                           selected={field.value}
                           onSelect={(date) => {
                             field.onChange(date);
                             setCalendarOpen(false);
                           }}
-                          disabled={!isDataPermitida}
-                          initialFocus
+                          disabled={(date) => !isDataPermitida(date)}
                           className="border-0"
                         />
                       </PopoverContent>
