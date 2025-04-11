@@ -1,9 +1,28 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
-    <footer className="w-full mt-auto border-t bg-background py-2 sm:py-3">
-      <div className="container mx-auto flex flex-col items-center justify-center px-2 sm:px-3 text-[10px] xs:text-xs sm:text-sm text-muted-foreground text-center">
-        <div>© 2025 I Like Ipiranga - Sistemas de Integração</div>
-        <div className="mt-0.5 sm:mt-1">Desenvolvido por TF-Carneiro</div>
+    <footer className="bg-muted py-2 sm:py-4 mt-auto text-muted-foreground border-t border-border">
+      <div className="container mx-auto text-center text-[10px] xs:text-xs sm:text-sm px-2">
+        <p>
+          &copy; {new Date().getFullYear()} I Like Ipiranga. Todos os direitos
+          reservados.
+        </p>
+        <p className="mt-0.5 sm:mt-1 flex flex-wrap justify-center gap-2 sm:gap-4">
+          <Link
+            href="/documentacao-usuario"
+            className="hover:text-primary transition-colors"
+          >
+            Manual do Usuário
+          </Link>
+          <span className="hidden xs:inline">|</span>
+          <Link
+            href="/documentacao-admin"
+            className="hover:text-primary transition-colors"
+          >
+            Manual do Administrador
+          </Link>
+        </p>
       </div>
     </footer>
   );

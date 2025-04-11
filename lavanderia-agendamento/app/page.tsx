@@ -17,31 +17,31 @@ export default function Home() {
     <div className="min-h-screen bg-background flex flex-col">
       <PortalHeader />
 
-      <main className="flex-1 p-3 sm:p-6 md:p-8">
+      <main className="flex-1 p-2 sm:p-6 md:p-8 pt-14 sm:pt-20">
         <div className="container mx-auto">
-          <div className="text-center mb-6 sm:mb-10">
-            <h1 className="text-2xl sm:text-4xl font-bold text-primary mb-2">
+          <div className="text-center mb-4 sm:mb-10">
+            <h1 className="text-xl sm:text-4xl font-bold text-primary mb-1 sm:mb-2">
               Condomínio I Like
             </h1>
-            <p className="text-muted-foreground text-sm sm:text-lg max-w-md mx-auto">
+            <p className="text-muted-foreground text-xs sm:text-lg max-w-md mx-auto">
               Bem-vindo ao portal de serviços do Condomínio I Like Ipiranga
             </p>
           </div>
 
           {/* Mural de Avisos */}
-          <div className="max-w-6xl mx-auto mb-6">
+          <div className="max-w-6xl mx-auto mb-4 sm:mb-6">
             <MuralAvisos />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-6 max-w-6xl mx-auto">
             {/* Card Lavanderia */}
             <Link href="/agendamento" className="block">
               <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer dark:shadow-md dark:shadow-primary/20">
-                <CardHeader className="p-3 sm:p-6">
-                  <CardTitle className="text-primary text-lg sm:text-xl">
+                <CardHeader className="p-2 sm:p-6">
+                  <CardTitle className="text-primary text-base sm:text-xl">
                     Lavanderia
                   </CardTitle>
-                  <CardDescription className="text-muted-foreground text-xs sm:text-sm">
+                  <CardDescription className="text-muted-foreground text-[10px] sm:text-sm">
                     Agende horários para utilizar as máquinas de lavar e secar
                   </CardDescription>
                 </CardHeader>
@@ -50,11 +50,11 @@ export default function Home() {
 
             {/* Cards para Academia */}
             <Card className="h-full opacity-85 cursor-not-allowed dark:shadow-md dark:shadow-primary/20">
-              <CardHeader className="p-3 sm:p-6">
-                <CardTitle className="text-primary text-lg sm:text-xl">
+              <CardHeader className="p-2 sm:p-6">
+                <CardTitle className="text-primary text-base sm:text-xl">
                   Academia
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs sm:text-sm">
+                <CardDescription className="text-muted-foreground text-[10px] sm:text-sm">
                   Página em desenvolvimento
                 </CardDescription>
               </CardHeader>
@@ -62,11 +62,11 @@ export default function Home() {
 
             {/* Card para Co-Working */}
             <Card className="h-full opacity-85 cursor-not-allowed dark:shadow-md dark:shadow-primary/20">
-              <CardHeader className="p-3 sm:p-6">
-                <CardTitle className="text-primary text-lg sm:text-xl">
+              <CardHeader className="p-2 sm:p-6">
+                <CardTitle className="text-primary text-base sm:text-xl">
                   Co-Working
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs sm:text-sm">
+                <CardDescription className="text-muted-foreground text-[10px] sm:text-sm">
                   Página em desenvolvimento
                 </CardDescription>
               </CardHeader>
@@ -74,11 +74,11 @@ export default function Home() {
 
             {/* Card para Salão de Festas */}
             <Card className="h-full opacity-85 cursor-not-allowed dark:shadow-md dark:shadow-primary/20">
-              <CardHeader className="p-3 sm:p-6">
-                <CardTitle className="text-primary text-lg sm:text-xl">
+              <CardHeader className="p-2 sm:p-6">
+                <CardTitle className="text-primary text-base sm:text-xl">
                   Salão de Festas
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs sm:text-sm">
+                <CardDescription className="text-muted-foreground text-[10px] sm:text-sm">
                   Página em desenvolvimento
                 </CardDescription>
               </CardHeader>
@@ -86,11 +86,11 @@ export default function Home() {
 
             {/* Card para Churrasqueira */}
             <Card className="h-full opacity-85 cursor-not-allowed dark:shadow-md dark:shadow-primary/20">
-              <CardHeader className="p-3 sm:p-6">
-                <CardTitle className="text-primary text-lg sm:text-xl">
+              <CardHeader className="p-2 sm:p-6">
+                <CardTitle className="text-primary text-base sm:text-xl">
                   Churrasqueira
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs sm:text-sm">
+                <CardDescription className="text-muted-foreground text-[10px] sm:text-sm">
                   Página em desenvolvimento
                 </CardDescription>
               </CardHeader>
@@ -98,11 +98,11 @@ export default function Home() {
 
             {/* Card para Quadra */}
             <Card className="h-full opacity-85 cursor-not-allowed dark:shadow-md dark:shadow-primary/20">
-              <CardHeader className="p-3 sm:p-6">
-                <CardTitle className="text-primary text-lg sm:text-xl">
+              <CardHeader className="p-2 sm:p-6">
+                <CardTitle className="text-primary text-base sm:text-xl">
                   Quadra
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs sm:text-sm">
+                <CardDescription className="text-muted-foreground text-[10px] sm:text-sm">
                   Página em desenvolvimento
                 </CardDescription>
               </CardHeader>

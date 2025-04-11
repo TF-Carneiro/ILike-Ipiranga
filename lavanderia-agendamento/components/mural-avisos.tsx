@@ -9,15 +9,49 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { AlertTriangle, Info, Bell } from "lucide-react";
+import {
+  AlertTriangle,
+  Info,
+  Bell,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import type { Aviso } from "@/lib/types";
+
+// Número de caracteres a mostrar quando o aviso está recolhido
+const LIMITE_CARACTERES = 150;
 
 export function MuralAvisos() {
   const [avisos, setAvisos] = useState<Aviso[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
+  const [avisosExpandidos, setAvisosExpandidos] = useState<
+    Record<number, boolean>
+  >({});
+
+  // Função para alternar o estado de expansão de um aviso
+  const toggleExpansao = (id: number) => {
+    setAvisosExpandidos((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  // Verificar se uma mensagem é longa e precisa ser truncada
+  const mensagemEhLonga = (mensagem: string) => {
+    return mensagem.length > LIMITE_CARACTERES;
+  };
+
+  // Retornar a mensagem truncada ou completa dependendo do estado
+  const formatarMensagem = (aviso: Aviso) => {
+    if (!mensagemEhLonga(aviso.mensagem) || avisosExpandidos[aviso.id]) {
+      return aviso.mensagem;
+    }
+    return `${aviso.mensagem.substring(0, LIMITE_CARACTERES)}...`;
+  };
 
   // Buscar avisos ativos
   useEffect(() => {
@@ -88,48 +122,70 @@ export function MuralAvisos() {
   }
 
   return (
-    <Card>
-      <CardHeader className="pb-2 p-3 sm:p-6 sm:pb-3">
-        <CardTitle className="text-lg sm:text-xl text-primary">
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-1 p-2 sm:p-6 sm:pb-3">
+        <CardTitle className="text-base sm:text-xl text-primary">
           Mural de Avisos
         </CardTitle>
-        <CardDescription className="text-xs sm:text-sm">
+        <CardDescription className="text-[10px] sm:text-sm">
           Avisos e informações importantes para os moradores
         </CardDescription>
       </CardHeader>
-      <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0">
+      <CardContent className="p-2 sm:p-6 pt-0 sm:pt-0">
         {carregando ? (
-          <div className="text-center py-3 text-xs sm:text-sm text-muted-foreground">
+          <div className="text-center py-2 sm:py-3 text-[10px] sm:text-sm text-muted-foreground">
             Carregando avisos...
           </div>
         ) : erro ? (
-          <div className="text-center py-3 text-xs sm:text-sm text-red-600 dark:text-red-400">
-            <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4 inline mr-1" />
+          <div className="text-center py-2 sm:py-3 text-[10px] sm:text-sm text-red-600 dark:text-red-400">
+            <AlertTriangle className="h-2.5 w-2.5 sm:h-4 sm:w-4 inline mr-1" />
             {erro}
           </div>
         ) : (
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-1.5 sm:space-y-3">
             {avisos.map((aviso) => (
               <div
                 key={aviso.id}
-                className={`p-2 sm:p-3 rounded-md ${getCorTipo(aviso.tipo)}`}
+                className={`p-1.5 sm:p-3 rounded-md ${getCorTipo(aviso.tipo)}`}
               >
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <div className="flex-shrink-0 mt-0.5 sm:mt-1">
+                <div className="flex items-start gap-1.5 sm:gap-3">
+                  <div className="flex-shrink-0 mt-0.5">
                     {getIcone(aviso.tipo)}
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-start">
-                      <h3 className="font-medium text-xs sm:text-base">
+                      <h3 className="font-medium text-[11px] sm:text-base">
                         {aviso.titulo}
                       </h3>
-                      <div className="text-[10px] sm:text-xs opacity-80">
+                      <div className="text-[8px] sm:text-xs opacity-80 ml-1">
                         {formatarData(aviso.dataCriacao)}
                       </div>
                     </div>
-                    <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm whitespace-pre-line">
-                      {aviso.mensagem}
-                    </p>
+                    <div className="mt-0.5 sm:mt-1">
+                      <p className="text-[10px] sm:text-sm whitespace-pre-line">
+                        {formatarMensagem(aviso)}
+                      </p>
+                      {mensagemEhLonga(aviso.mensagem) && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="mt-0.5 sm:mt-1 h-5 sm:h-6 px-1.5 sm:px-2 text-[8px] sm:text-xs"
+                          onClick={() => toggleExpansao(aviso.id)}
+                        >
+                          {avisosExpandidos[aviso.id] ? (
+                            <>
+                              <ChevronUp className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
+                              Mostrar menos
+                            </>
+                          ) : (
+                            <>
+                              <ChevronDown className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
+                              Mostrar mais
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

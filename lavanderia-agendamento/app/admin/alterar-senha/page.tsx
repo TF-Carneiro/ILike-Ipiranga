@@ -102,7 +102,7 @@ export default function AlterarSenhaPage() {
       <div className="min-h-screen bg-background flex flex-col">
         <AdminHeader />
 
-        <main className="container mx-auto py-4 sm:py-6 px-3 sm:px-4 flex-1">
+        <main className="container mx-auto py-4 sm:py-6 px-3 sm:px-4 flex-1 pt-16 sm:pt-20">
           <div className="max-w-md mx-auto">
             <div className="mb-6">
               <Link

@@ -9,12 +9,26 @@ import { AuthProvider } from "@/contexts/auth-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// Reverter para o título original do documento
 export const metadata: Metadata = {
   title: "Sistema de Agendamento de Lavanderia",
   description: "Agende horários para usar as máquinas de lavar",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  viewport:
+    "width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, user-scalable=yes",
+  themeColor: "#00A67E",
   generator: "v0.dev",
+  manifest: "/manifest.json",
+  applicationName: "I Like Ipiranga - Lavanderia",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "I Like Lavanderia",
+  },
+  formatDetection: {
+    telephone: true,
+    date: true,
+    email: true,
+    address: true,
+  },
 };
 
 export default function RootLayout({
@@ -24,7 +38,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={inter.className}>
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+      </head>
+      <body className={`${inter.className} antialiased overscroll-none`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

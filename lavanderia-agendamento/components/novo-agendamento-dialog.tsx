@@ -197,153 +197,171 @@ export function NovoAgendamentoDialog({
 
   return (
     <Dialog open={aberto} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] max-w-[95vw] p-3 sm:p-6">
-        <DialogHeader className="space-y-2 sm:space-y-3 text-left">
-          <DialogTitle className="text-xl sm:text-2xl font-bold text-primary">
+      <DialogContent className="sm:max-w-[425px] max-w-[95vw] p-2 sm:p-6">
+        <DialogHeader className="pb-1 sm:pb-2">
+          <DialogTitle className="text-lg sm:text-xl">
             Novo Agendamento
           </DialogTitle>
-          <DialogDescription className="text-xs sm:text-sm">
-            Preencha os campos abaixo para agendar um horário na lavanderia.
+          <DialogDescription className="text-[10px] sm:text-sm">
+            Preencha os campos para agendar um horário.
           </DialogDescription>
         </DialogHeader>
 
         {errorMessage && (
-          <Alert variant="destructive" className="mt-2 mb-2">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle className="text-xs sm:text-sm ml-2">Erro</AlertTitle>
-            <AlertDescription className="text-xs ml-2">
+          <Alert
+            variant="destructive"
+            className="mt-1 sm:mt-2 mb-2 sm:mb-4 py-1 sm:py-2"
+          >
+            <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+            <AlertTitle className="text-xs sm:text-sm ml-1">Erro</AlertTitle>
+            <AlertDescription className="text-[10px] sm:text-xs ml-1">
               {errorMessage}
             </AlertDescription>
           </Alert>
         )}
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-3 sm:space-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="nome"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs sm:text-sm">Nome</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Seu nome"
-                      {...field}
-                      className="text-xs sm:text-sm h-8 sm:h-10"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="apartamento"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs sm:text-sm">Unidade</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Nº do apartamento"
-                      {...field}
-                      className="text-xs sm:text-sm h-8 sm:h-10"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="data"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel className="text-xs sm:text-sm">Data</FormLabel>
-                  <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "min-w-[240px] justify-start text-left font-normal text-xs sm:text-sm h-8 sm:h-10",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                          {field.value ? (
-                            format(field.value, "dd 'de' MMMM 'de' yyyy", {
-                              locale: ptBR,
-                            })
-                          ) : (
-                            <span>Selecione uma data</span>
-                          )}
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <CalendarioPersonalizado
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          field.onChange(date);
-                          setCalendarOpen(false);
-                        }}
-                        disabled={(date) => !isDataPermitida(date)}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="hora"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-xs sm:text-sm">Horário</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-2 sm:gap-4 py-2 sm:py-4">
+              <FormField
+                control={form.control}
+                name="nome"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs sm:text-sm">Nome</FormLabel>
                     <FormControl>
-                      <SelectTrigger className="text-xs sm:text-sm h-8 sm:h-10">
-                        <SelectValue placeholder="Selecione um horário" />
-                      </SelectTrigger>
+                      <Input
+                        placeholder="Digite seu nome"
+                        className="text-xs sm:text-sm h-8 sm:h-10"
+                        {...field}
+                      />
                     </FormControl>
-                    <SelectContent className="text-xs sm:text-sm max-h-[200px]">
-                      {horarios.map((item) => (
-                        <SelectItem
-                          key={item.value}
-                          value={item.value}
-                          className="text-xs sm:text-sm"
-                        >
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
+                    <FormMessage className="text-[10px] sm:text-xs" />
+                  </FormItem>
+                )}
+              />
 
-            <DialogFooter className="pt-2 sm:pt-4">
+              <FormField
+                control={form.control}
+                name="apartamento"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs sm:text-sm">
+                      Unidade
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Ex: 101A"
+                        className="text-xs sm:text-sm h-8 sm:h-10"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-[10px] sm:text-xs" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="data"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel className="text-xs sm:text-sm">Data</FormLabel>
+                    <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "pl-3 text-left font-normal text-xs sm:text-sm h-8 sm:h-10",
+                              !field.value && "text-muted-foreground"
+                            )}
+                            onClick={(e) => {
+                              e.preventDefault();
+                            }}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd/MM/yyyy", {
+                                locale: ptBR,
+                              })
+                            ) : (
+                              <span>Selecione uma data</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-3 w-3 sm:h-4 sm:w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <CalendarioPersonalizado
+                          mode="single"
+                          selected={field.value}
+                          onSelect={(date) => {
+                            field.onChange(date);
+                            setCalendarOpen(false);
+                          }}
+                          disabled={!isDataPermitida}
+                          initialFocus
+                          className="border-0"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage className="text-[10px] sm:text-xs" />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="hora"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xs sm:text-sm">
+                      Horário
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="text-xs sm:text-sm h-8 sm:h-10">
+                          <SelectValue placeholder="Selecione um horário" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {horarios.map((horario) => (
+                          <SelectItem
+                            key={horario.value}
+                            value={horario.value}
+                            className="text-xs sm:text-sm"
+                          >
+                            {horario.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="text-[10px] sm:text-xs" />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <DialogFooter className="gap-1 sm:gap-2 pt-2 sm:pt-2">
+              <Button
+                type="button"
+                variant={"outline"}
+                onClick={() => onOpenChange(false)}
+                className="text-xs sm:text-sm h-8 sm:h-10"
+              >
+                Cancelar
+              </Button>
               <Button
                 type="submit"
                 disabled={enviando}
-                className="w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-10"
+                className="text-xs sm:text-sm h-8 sm:h-10"
               >
                 {enviando ? (
                   <>
-                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    <Loader2 className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
                     Agendando...
                   </>
                 ) : (

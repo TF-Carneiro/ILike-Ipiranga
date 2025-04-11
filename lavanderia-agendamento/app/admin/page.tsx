@@ -283,7 +283,7 @@ export default function AdminPage() {
       <AuthGuard>
         <div className="min-h-screen bg-background flex flex-col">
           <AdminHeader />
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center pt-16 sm:pt-20">
             <div className="text-center">
               <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" />
               <p className="text-muted-foreground">
@@ -625,11 +625,11 @@ export default function AdminPage() {
     <AuthGuard>
       <div className="min-h-screen bg-background flex flex-col">
         <AdminHeader />
-
-        <main className="container mx-auto py-4 sm:py-6 px-3 sm:px-4 flex-1">
-          {/* Renderizar a visualização apropriada com base no estado isMobile */}
-          {isMobile ? renderMobileView() : renderDesktopView()}
-        </main>
+        <div className="flex-1 p-3 sm:p-6 pt-16 sm:pt-20">
+          <div className="container mx-auto">
+            {isMobile ? renderMobileView() : renderDesktopView()}
+          </div>
+        </div>
 
         {/* Diálogo de confirmação para excluir múltiplos agendamentos */}
         <Dialog
