@@ -283,7 +283,7 @@ export default function AdminPage() {
       <AuthGuard>
         <div className="min-h-screen bg-background flex flex-col">
           <AdminHeader />
-          <div className="flex-1 flex items-center justify-center pt-16 sm:pt-20">
+          <div className="flex-1 flex items-center justify-center pt-24 sm:pt-28">
             <div className="text-center">
               <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto mb-4" />
               <p className="text-muted-foreground">
@@ -625,7 +625,7 @@ export default function AdminPage() {
     <AuthGuard>
       <div className="min-h-screen bg-background flex flex-col">
         <AdminHeader />
-        <div className="flex-1 p-3 sm:p-6 pt-16 sm:pt-20">
+        <div className="flex-1 p-3 sm:p-6 pt-24 sm:pt-28">
           <div className="container mx-auto">
             {isMobile ? renderMobileView() : renderDesktopView()}
           </div>

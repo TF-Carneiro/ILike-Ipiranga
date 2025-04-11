@@ -3,12 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -22,6 +16,16 @@ import { Menu } from "lucide-react";
 export function MenuCards() {
   const [open, setOpen] = useState(false);
 
+  // Array com os serviços disponíveis
+  const servicos = [
+    { titulo: "Lavanderia", href: "/agendamento", ativo: true },
+    { titulo: "Academia", href: "#", ativo: false },
+    { titulo: "Co-Working", href: "#", ativo: false },
+    { titulo: "Salão de Festas", href: "#", ativo: false },
+    { titulo: "Churrasqueira", href: "#", ativo: false },
+    { titulo: "Quadra", href: "#", ativo: false },
+  ];
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
@@ -30,85 +34,36 @@ export function MenuCards() {
           <span className="sr-only">Menu de Serviços</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="w-[90vw] sm:w-80 z-50 max-h-[80vh] overflow-y-auto"
-        sideOffset={8}
-      >
+      <DropdownMenuContent align="end" className="w-48 z-50" sideOffset={8}>
         <DropdownMenuLabel className="text-sm">
           Serviços do Condomínio
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <div className="p-2 grid gap-2">
-          {/* Card Lavanderia */}
-          <Link href="/agendamento" onClick={() => setOpen(false)}>
-            <Card className="hover:bg-accent transition-colors cursor-pointer">
-              <CardHeader className="p-3">
-                <CardTitle className="text-primary text-sm">
-                  Lavanderia
-                </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs line-clamp-2">
-                  Agende horários para utilizar as máquinas de lavar e secar
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </Link>
-
-          {/* Cards para Academia */}
-          <Card className="opacity-70 cursor-not-allowed">
-            <CardHeader className="p-3">
-              <CardTitle className="text-primary text-sm">Academia</CardTitle>
-              <CardDescription className="text-muted-foreground text-xs line-clamp-2">
-                Página em desenvolvimento
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          {/* Card para Co-Working */}
-          <Card className="opacity-70 cursor-not-allowed">
-            <CardHeader className="p-3">
-              <CardTitle className="text-primary text-sm">Co-Working</CardTitle>
-              <CardDescription className="text-muted-foreground text-xs line-clamp-2">
-                Página em desenvolvimento
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          {/* Card para Salão de Festas */}
-          <Card className="opacity-70 cursor-not-allowed">
-            <CardHeader className="p-3">
-              <CardTitle className="text-primary text-sm">
-                Salão de Festas
-              </CardTitle>
-              <CardDescription className="text-muted-foreground text-xs line-clamp-2">
-                Página em desenvolvimento
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          {/* Card para Churrasqueira */}
-          <Card className="opacity-70 cursor-not-allowed">
-            <CardHeader className="p-3">
-              <CardTitle className="text-primary text-sm">
-                Churrasqueira
-              </CardTitle>
-              <CardDescription className="text-muted-foreground text-xs line-clamp-2">
-                Página em desenvolvimento
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          {/* Card para Quadra */}
-          <Card className="opacity-70 cursor-not-allowed">
-            <CardHeader className="p-3">
-              <CardTitle className="text-primary text-sm">Quadra</CardTitle>
-              <CardDescription className="text-muted-foreground text-xs line-clamp-2">
-                Página em desenvolvimento
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        </div>
+        {servicos.map((servico) =>
+          servico.ativo ? (
+            <Link
+              href={servico.href}
+              key={servico.titulo}
+              onClick={() => setOpen(false)}
+            >
+              <DropdownMenuItem className="cursor-pointer text-primary font-medium">
+                {servico.titulo}
+              </DropdownMenuItem>
+            </Link>
+          ) : (
+            <DropdownMenuItem
+              key={servico.titulo}
+              className="opacity-70 cursor-not-allowed"
+              disabled
+            >
+              {servico.titulo}
+              <span className="text-[10px] ml-2 text-muted-foreground">
+                (em breve)
+              </span>
+            </DropdownMenuItem>
+          )
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

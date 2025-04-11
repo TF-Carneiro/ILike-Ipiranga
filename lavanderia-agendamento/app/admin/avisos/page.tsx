@@ -228,7 +228,7 @@ export default function AvisosPage() {
   return (
     <>
       <AdminHeader />
-      <div className="container mx-auto py-6 pt-20 sm:pt-24">
+      <div className="container mx-auto py-6 pt-24 sm:pt-28">
         <div className="flex justify-between items-center mb-4">
           <Link href="/admin">
             <Button

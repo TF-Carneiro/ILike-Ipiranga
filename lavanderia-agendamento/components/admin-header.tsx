@@ -19,8 +19,8 @@ export function AdminHeader() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-background shadow-md border-b z-50">
-      <div className="container mx-auto py-2 sm:py-3 px-1 sm:px-3 flex flex-wrap justify-between items-center gap-1 sm:gap-2">
+    <header className="fixed top-0 left-0 right-0 bg-background shadow-md border-b z-50 h-[70px] sm:h-[80px]">
+      <div className="container mx-auto h-full py-1 sm:py-2 px-1 sm:px-3 flex flex-wrap justify-between items-center gap-1 sm:gap-2">
         <div className="flex items-center gap-1 sm:gap-2">
           <Link href="/" className="flex items-center">
             <div className="relative h-7 w-20 sm:h-10 sm:w-28">
