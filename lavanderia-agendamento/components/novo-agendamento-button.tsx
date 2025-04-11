@@ -12,12 +12,12 @@ export function NovoAgendamentoButton() {
     <>
       <Button
         onClick={() => setDialogAberto(true)}
-        className="bg-primary hover:bg-primary/90 text-white whitespace-nowrap h-8 text-xs sm:text-sm px-2 sm:px-3"
+        className="bg-primary hover:bg-primary/90 text-white whitespace-nowrap h-7 sm:h-9 text-[10px] sm:text-sm px-2 sm:px-3"
         size="sm"
       >
-        <Plus className="mr-1 h-3 w-3 sm:h-4 sm:w-4" />
-        <span className="hidden sm:inline">Novo Agendamento</span>
-        <span className="sm:hidden">Agendar</span>
+        <Plus className="mr-0.5 sm:mr-1 h-3 w-3 sm:h-4 sm:w-4" />
+        <span className="hidden xs:inline">Novo Agendamento</span>
+        <span className="xs:hidden">Agendar</span>
       </Button>
       <NovoAgendamentoDialog
         aberto={dialogAberto}

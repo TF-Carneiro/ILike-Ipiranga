@@ -197,21 +197,23 @@ export function NovoAgendamentoDialog({
 
   return (
     <Dialog open={aberto} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] max-w-[95vw] p-4 sm:p-6">
-        <DialogHeader>
-          <DialogTitle className="text-primary text-lg sm:text-xl">
+      <DialogContent className="sm:max-w-[425px] max-w-[95vw] p-3 sm:p-6">
+        <DialogHeader className="space-y-2 sm:space-y-3 text-left">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-primary">
             Novo Agendamento
           </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm">
-            Preencha os dados para agendar um horário na lavanderia.
+            Preencha os campos abaixo para agendar um horário na lavanderia.
           </DialogDescription>
         </DialogHeader>
 
         {errorMessage && (
-          <Alert variant="destructive" className="mb-4">
+          <Alert variant="destructive" className="mt-2 mb-2">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Erro</AlertTitle>
-            <AlertDescription>{errorMessage}</AlertDescription>
+            <AlertTitle className="text-xs sm:text-sm ml-2">Erro</AlertTitle>
+            <AlertDescription className="text-xs ml-2">
+              {errorMessage}
+            </AlertDescription>
           </Alert>
         )}
 
@@ -228,9 +230,9 @@ export function NovoAgendamentoDialog({
                   <FormLabel className="text-xs sm:text-sm">Nome</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Digite seu nome"
+                      placeholder="Seu nome"
                       {...field}
-                      className="border-input focus-visible:ring-primary text-xs sm:text-sm h-8 sm:h-10"
+                      className="text-xs sm:text-sm h-8 sm:h-10"
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
@@ -246,9 +248,9 @@ export function NovoAgendamentoDialog({
                   <FormLabel className="text-xs sm:text-sm">Unidade</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Informe sua unidade"
+                      placeholder="Nº do apartamento"
                       {...field}
-                      className="border-input focus-visible:ring-primary text-xs sm:text-sm h-8 sm:h-10"
+                      className="text-xs sm:text-sm h-8 sm:h-10"
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
@@ -268,27 +270,31 @@ export function NovoAgendamentoDialog({
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-full pl-3 text-left font-normal border-input h-8 sm:h-10 text-xs sm:text-sm",
+                            "min-w-[240px] justify-start text-left font-normal text-xs sm:text-sm h-8 sm:h-10",
                             !field.value && "text-muted-foreground"
                           )}
                         >
+                          <CalendarIcon className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                           {field.value ? (
-                            format(field.value, "PPP", { locale: ptBR })
+                            format(field.value, "dd 'de' MMMM 'de' yyyy", {
+                              locale: ptBR,
+                            })
                           ) : (
                             <span>Selecione uma data</span>
                           )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
                       <CalendarioPersonalizado
+                        mode="single"
                         selected={field.value}
                         onSelect={(date) => {
                           field.onChange(date);
-                          // Fechar o calendário automaticamente após a seleção
-                          setTimeout(() => setCalendarOpen(false), 100);
+                          setCalendarOpen(false);
                         }}
+                        disabled={(date) => !isDataPermitida(date)}
+                        initialFocus
                       />
                     </PopoverContent>
                   </Popover>
@@ -308,18 +314,18 @@ export function NovoAgendamentoDialog({
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="border-input focus:ring-primary h-8 sm:h-10 text-xs sm:text-sm">
+                      <SelectTrigger className="text-xs sm:text-sm h-8 sm:h-10">
                         <SelectValue placeholder="Selecione um horário" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      {horarios.map((horario) => (
+                    <SelectContent className="text-xs sm:text-sm max-h-[200px]">
+                      {horarios.map((item) => (
                         <SelectItem
-                          key={horario.value}
-                          value={horario.value}
+                          key={item.value}
+                          value={item.value}
                           className="text-xs sm:text-sm"
                         >
-                          {horario.label}
+                          {item.label}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -333,11 +339,11 @@ export function NovoAgendamentoDialog({
               <Button
                 type="submit"
                 disabled={enviando}
-                className="bg-primary hover:bg-primary/90 text-white w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-10"
+                className="w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-10"
               >
                 {enviando ? (
                   <>
-                    <Loader2 className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
                     Agendando...
                   </>
                 ) : (

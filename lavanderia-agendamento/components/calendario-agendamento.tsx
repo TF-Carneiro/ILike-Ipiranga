@@ -30,7 +30,7 @@ export function CalendarioAgendamento() {
   // Detectar se estamos em uma tela pequena - ajustado para melhor detecção
   useEffect(() => {
     const verificarTamanho = () => {
-      setVisualizacaoMobile(window.innerWidth < 768);
+      setVisualizacaoMobile(window.innerWidth < 640);
     };
 
     // Verificar tamanho inicial
@@ -53,9 +53,11 @@ export function CalendarioAgendamento() {
   // Exibir indicador de carregamento
   if (carregando) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-        <p className="text-muted-foreground">Carregando agendamentos...</p>
+      <div className="flex flex-col items-center justify-center py-6 sm:py-12">
+        <Loader2 className="h-8 w-8 sm:h-12 sm:w-12 animate-spin text-primary mb-2 sm:mb-4" />
+        <p className="text-sm sm:text-base text-muted-foreground">
+          Carregando agendamentos...
+        </p>
       </div>
     );
   }
@@ -63,16 +65,16 @@ export function CalendarioAgendamento() {
   // Renderização para dispositivos móveis - melhorada para melhor visualização
   if (visualizacaoMobile) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         <CalendarioNavegacao
           dataSelecionada={dataSelecionada}
           setDataSelecionada={setDataSelecionada}
         />
 
         {agendamentosDoDia.length === 0 ? (
-          <div className="text-center py-6 text-muted-foreground bg-muted/50 rounded-lg border border-border">
-            <WashingMachine className="h-10 w-10 mx-auto mb-2 text-primary/50" />
-            <p className="text-sm">
+          <div className="text-center py-4 text-muted-foreground bg-muted/50 rounded-lg border border-border">
+            <WashingMachine className="h-8 w-8 mx-auto mb-2 text-primary/50" />
+            <p className="text-xs sm:text-sm">
               Nenhum agendamento encontrado para esta data.
             </p>
             <p className="text-xs mt-1">
@@ -81,17 +83,17 @@ export function CalendarioAgendamento() {
           </div>
         ) : null}
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {horarios.map((hora) => (
             <div
               key={`hora-${hora}`}
               className="border rounded-lg overflow-hidden border-border"
             >
-              <div className="bg-primary text-primary-foreground p-2 font-medium flex items-center text-sm">
-                <Clock className="h-4 w-4 mr-1" />
+              <div className="bg-primary text-primary-foreground p-1.5 font-medium flex items-center text-xs">
+                <Clock className="h-3 w-3 mr-1" />
                 {hora}:00
               </div>
-              <div className="grid grid-cols-2 gap-2 p-2">
+              <div className="grid grid-cols-2 gap-1.5 p-1.5">
                 {maquinas.map((maquina) => {
                   const agendamento = agendamentosDoDia.find(
                     (a) =>
@@ -102,27 +104,27 @@ export function CalendarioAgendamento() {
                   return (
                     <div
                       key={`slot-${hora}-${maquina}`}
-                      className={`p-2 border rounded-md border-border ${
+                      className={`p-1.5 border rounded-md border-border ${
                         agendamento
                           ? "bg-primary/10 dark:bg-primary/20"
                           : "bg-card"
                       }`}
                     >
                       {agendamento ? (
-                        <div className="flex flex-col gap-1 items-center text-center">
+                        <div className="flex flex-col gap-0.5 items-center text-center">
                           <Badge
                             variant="outline"
-                            className="bg-background border-primary text-primary text-xs px-1 py-0 h-5"
+                            className="bg-background border-primary text-primary text-[10px] px-1 py-0 h-4"
                           >
                             {agendamento.nome}
                           </Badge>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-[10px] text-muted-foreground">
                             Unid. {agendamento.apartamento}
                           </span>
                         </div>
                       ) : (
-                        <div className="h-full flex items-center justify-center text-xs text-muted-foreground">
-                          Disponível
+                        <div className="h-full flex items-center justify-center text-[10px] text-muted-foreground">
+                          Livre
                         </div>
                       )}
                     </div>

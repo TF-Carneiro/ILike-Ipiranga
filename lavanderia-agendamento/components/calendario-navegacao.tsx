@@ -47,9 +47,9 @@ export function CalendarioNavegacao({
     const formatoCompleto = `${diaDaSemana}, ${dia} de ${mes} de ${ano}`;
 
     // Formato reduzido para mobile
-    const formatoReduzido = format(dataSelecionada, "dd/MM/yyyy", {
+    const formatoReduzido = `${dia}/${format(dataSelecionada, "MM", {
       locale: ptBR,
-    });
+    })}`;
 
     return (
       <>
@@ -60,31 +60,31 @@ export function CalendarioNavegacao({
   };
 
   return (
-    <div className="flex items-center justify-between bg-card p-3 sm:p-4 rounded-lg shadow-sm border border-border">
-      <div className="flex items-center gap-2">
-        <Calendar className="h-5 w-5 text-primary" />
-        <h2 className="text-base sm:text-xl font-semibold text-foreground">
+    <div className="flex items-center justify-between bg-card p-2 sm:p-4 rounded-lg shadow-sm border border-border">
+      <div className="flex items-center gap-1 sm:gap-2">
+        <Calendar className="h-3 w-3 sm:h-5 sm:w-5 text-primary" />
+        <h2 className="text-sm sm:text-xl font-semibold text-foreground">
           {formatarData()}
         </h2>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
         <Button
           variant="outline"
           size="icon"
           onClick={navegarParaAnterior}
-          className="border-border h-8 w-8 sm:h-10 sm:w-10"
+          className="border-border h-6 w-6 sm:h-10 sm:w-10"
           aria-label="Dia anterior"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={navegarParaProximo}
-          className="border-border h-8 w-8 sm:h-10 sm:w-10"
+          className="border-border h-6 w-6 sm:h-10 sm:w-10"
           aria-label="Próximo dia"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
         </Button>
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { LogOut, User, Settings } from "lucide-react";
+import { LogOut, User, Settings, Bell } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
@@ -45,6 +45,16 @@ export function AdminHeader() {
               {user?.username}
             </span>
           </div>
+          <Link href="/admin/avisos">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-1 text-xs h-8"
+            >
+              <Bell className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Avisos</span>
+            </Button>
+          </Link>
           <Link href="/admin/alterar-senha">
             <Button
               variant="ghost"

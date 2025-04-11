@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import type { Agendamento } from "./types";
+import type { Agendamento, Aviso } from "./types";
 import { supabase } from "./supabase";
 
 // Atualizar o tipo AgendamentoInput para tornar maquinaId opcional
@@ -80,4 +80,196 @@ export async function criarAgendamento(
     dataHora: data.data_hora,
     maquinaId: data.maquina_id,
   };
+}
+
+// Input para criar ou editar um aviso
+type AvisoInput = {
+  titulo: string;
+  mensagem: string;
+  tipo: "info" | "aviso" | "urgente";
+  ativo: boolean;
+  criadoPor: string;
+};
+
+/**
+ * Obtém todos os avisos
+ * @returns Lista de avisos
+ */
+export async function obterAvisos(): Promise<Aviso[]> {
+  try {
+    const { data, error } = await supabase
+      .from("avisos")
+      .select("*")
+      .order("data_criacao", { ascending: false });
+
+    if (error) {
+      throw new Error(`Erro ao buscar avisos: ${error.message}`);
+    }
+
+    // Converter os dados do formato do banco para o formato da aplicação
+    return data.map((item) => ({
+      id: item.id,
+      titulo: item.titulo,
+      mensagem: item.mensagem,
+      tipo: item.tipo,
+      dataCriacao: item.data_criacao,
+      ativo: item.ativo,
+      criadoPor: item.criado_por,
+    }));
+  } catch (error) {
+    console.error("Erro ao obter avisos:", error);
+    throw error;
+  }
+}
+
+/**
+ * Obtém avisos ativos para exibição no mural
+ * @returns Lista de avisos ativos
+ */
+export async function obterAvisosAtivos(): Promise<Aviso[]> {
+  try {
+    const { data, error } = await supabase
+      .from("avisos")
+      .select("*")
+      .eq("ativo", true)
+      .order("data_criacao", { ascending: false });
+
+    if (error) {
+      throw new Error(`Erro ao buscar avisos ativos: ${error.message}`);
+    }
+
+    // Converter os dados do formato do banco para o formato da aplicação
+    return data.map((item) => ({
+      id: item.id,
+      titulo: item.titulo,
+      mensagem: item.mensagem,
+      tipo: item.tipo,
+      dataCriacao: item.data_criacao,
+      ativo: item.ativo,
+      criadoPor: item.criado_por,
+    }));
+  } catch (error) {
+    console.error("Erro ao obter avisos ativos:", error);
+    throw error;
+  }
+}
+
+/**
+ * Cria um novo aviso
+ * @param input Dados do aviso
+ * @returns Aviso criado
+ */
+export async function criarAviso(input: AvisoInput): Promise<Aviso> {
+  try {
+    const { data, error } = await supabase
+      .from("avisos")
+      .insert({
+        titulo: input.titulo,
+        mensagem: input.mensagem,
+        tipo: input.tipo,
+        ativo: input.ativo,
+        criado_por: input.criadoPor,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Erro ao criar aviso: ${error.message}`);
+    }
+
+    // Revalidar a página para forçar uma atualização dos dados
+    revalidatePath("/");
+    revalidatePath("/admin/avisos");
+
+    // Retornar o aviso formatado
+    return {
+      id: data.id,
+      titulo: data.titulo,
+      mensagem: data.mensagem,
+      tipo: data.tipo,
+      dataCriacao: data.data_criacao,
+      ativo: data.ativo,
+      criadoPor: data.criado_por,
+    };
+  } catch (error) {
+    console.error("Erro ao criar aviso:", error);
+    throw error;
+  }
+}
+
+/**
+ * Atualiza um aviso existente
+ * @param id ID do aviso
+ * @param input Dados atualizados do aviso
+ * @returns Aviso atualizado
+ */
+export async function atualizarAviso(
+  id: number,
+  input: Partial<AvisoInput>
+): Promise<Aviso> {
+  try {
+    // Preparar os dados para atualização
+    const dadosAtualizados: any = {};
+    if (input.titulo !== undefined) dadosAtualizados.titulo = input.titulo;
+    if (input.mensagem !== undefined)
+      dadosAtualizados.mensagem = input.mensagem;
+    if (input.tipo !== undefined) dadosAtualizados.tipo = input.tipo;
+    if (input.ativo !== undefined) dadosAtualizados.ativo = input.ativo;
+    if (input.criadoPor !== undefined)
+      dadosAtualizados.criado_por = input.criadoPor;
+
+    // Atualizar no Supabase
+    const { data, error } = await supabase
+      .from("avisos")
+      .update(dadosAtualizados)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Erro ao atualizar aviso: ${error.message}`);
+    }
+
+    // Revalidar a página para forçar uma atualização dos dados
+    revalidatePath("/");
+    revalidatePath("/admin/avisos");
+
+    // Retornar o aviso formatado
+    return {
+      id: data.id,
+      titulo: data.titulo,
+      mensagem: data.mensagem,
+      tipo: data.tipo,
+      dataCriacao: data.data_criacao,
+      ativo: data.ativo,
+      criadoPor: data.criado_por,
+    };
+  } catch (error) {
+    console.error("Erro ao atualizar aviso:", error);
+    throw error;
+  }
+}
+
+/**
+ * Exclui um aviso
+ * @param id ID do aviso
+ * @returns true se sucesso, false se falha
+ */
+export async function excluirAviso(id: number): Promise<boolean> {
+  try {
+    const { error } = await supabase.from("avisos").delete().eq("id", id);
+
+    if (error) {
+      throw new Error(`Erro ao excluir aviso: ${error.message}`);
+    }
+
+    // Revalidar a página para forçar uma atualização dos dados
+    revalidatePath("/");
+    revalidatePath("/admin/avisos");
+
+    return true;
+  } catch (error) {
+    console.error("Erro ao excluir aviso:", error);
+    return false;
+  }
 }
