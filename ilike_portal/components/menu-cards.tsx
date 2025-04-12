@@ -34,6 +34,12 @@ export function MenuCards() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+  
+  // Evitar que o menu bloqueie a rolagem da página
+  useEffect(() => {
+    // Não fazemos nada aqui, pois queremos manter a rolagem ativa
+    // O comportamento padrão do Radix UI será substituído pelo modal={false}
+  }, [open]);
 
   // Array com os serviços disponíveis
   const servicos = [
@@ -56,7 +62,7 @@ export function MenuCards() {
 
   return (
     <div ref={menuRef}>
-      <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="h-8 w-8">
             <Menu className="h-4 w-4" />
